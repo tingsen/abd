@@ -1,8 +1,9 @@
 FROM php:5.6-apache
 
-# Debian 8 (jessie) 已归档，使用 archive 源
-RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list \
-    && sed -i 's|http://security.debian.org/debian-security|http://archive.debian.org/debian-security|g' /etc/apt/sources.list \
+# 修复 Debian 9 (stretch) 归档源，跳过 GPG 验证和失效源
+RUN echo 'deb [trusted=yes] http://archive.debian.org/debian stretch main' > /etc/apt/sources.list \
+    && echo 'deb [trusted=yes] http://archive.debian.org/debian-security stretch/updates main' >> /etc/apt/sources.list \
+    && rm -rf /etc/apt/sources.list.d/* \
     && apt-get update -o Acquire::Check-Valid-Until=false
 
 # 安装系统依赖和 PHP 扩展

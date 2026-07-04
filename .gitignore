@@ -1,0 +1,32 @@
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ThinkPHP Runtime
+Application/Runtime/
+abd/Application/Runtime/
+abd/Application/Common/Conf/*_runtime.php
+
+# Uploads (user uploaded files)
+abd/Uploads/
+
+# CodeBuddy
+.codebuddy/
+
+# PHP errors log
+*.log
+
+# Composer (if added later)
+/vendor/
+composer.lock
+
+# Environment / sensitive config backup
+*.local.php

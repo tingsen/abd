@@ -1,0 +1,115 @@
+<include file="Public:header"/>
+<!--主页面-->
+<div id="main-content" class="content">
+    <ul class="breadcrumb">
+		<li><a href="/">首页</a></li>
+		<li><a href="{:U('Order/orderList')}">资讯管理</a></li>
+		<li class="active">修改资讯</li>
+	</ul>
+    <div class="page-header clearfix">
+        <h3>资讯管理</h3>
+        <ul id="tabs" class="nav nav-tabs">    
+            <li class="active">
+                <a href="javascript:;">修改资讯</a>
+            </li>
+            
+        </ul>
+    </div>
+
+    <div id="tabs-content" class="content-box-content">
+        <div  class="form-horizontal">
+            <div class="form-group">
+                <label for="title" class="col-sm-3 control-label"><em class="prompt-red">*</em>资讯标题：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="title" name="title" value="{$user['title']}">
+                </div>
+            </div>
+
+            <div class="form-group">
+				<label for="content" class="col-sm-3 control-label"><em class="prompt-red">*</em>资讯内容：</label>
+				<div class="col-sm-9">
+				  <textarea id="content" name="content" type="text/plain">{:htmlspecialchars_decode($user['content'])}</textarea>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="is_url" class="col-sm-3 control-label"><em class="prompt-red">*</em>是否网址：</label>
+				<div class="col-sm-9">
+				<if condition="$user['is_url'] eq 1">
+					<select id="is_url" name="is_url">
+					  <option value ="0">否</option>
+					  <option value ="1" selected>是</option>
+					</select>
+				<else/>
+					<select id="is_url" name="is_url">
+					  <option value ="0" selected>否</option>
+					  <option value ="1">是</option>
+					</select>
+				</if>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="web_url" class="col-sm-3 control-label"><em class="prompt-red"></em>网址地址：</label>
+				<div class="col-sm-9">
+				  <input type="text" class="form-control" id="web_url" name="web_url" value="{$user['web_url']}">
+				</div>
+			</div>
+            
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                  <button id="sure" class="btn btn-default btn-primary">确认修改</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+	var ue = UE.getEditor('content', {
+		initialFrameWidth: 900,    //设置宽度
+		initialFrameHeight: 450,   //设置高度
+	});
+    $('#sure').click(function(){
+		var id = "<?php echo $user['id']?>";
+		var title = $.trim($('#title').val());
+		if(title == ''){
+			alert('请输入标题');
+			return false;
+		}
+		var content = ue.getContent('content');
+		if(content == ''){
+			alert('请填写资讯内容');
+			return false;
+		}
+        var is_url = $("#is_url").find("option:selected").val();
+		if(is_url == ''){
+			alert('请选择类型');
+			return false;
+		}
+		var is_url = $.trim($('#is_url').val());
+
+		var web_url = $.trim($('#web_url').val());
+		if (is_url == 1 && web_url == '') {
+			alert('是网址请填写网址再提交');
+			return false;
+		}
+        $.ajax({
+            url:"{:U('Order/editOrder')}",
+            type:'POST',
+            dataType: "json",//如果含有这句话，ajax返回的必须是json自动转码
+            data:{id:id,title:title,content:content,is_url:is_url,web_url:web_url},
+            success:function(data){
+                if(data['code'] == 1){
+                    alert('修改成功');    
+                    window.location.href = "{:U('Order/orderList')}";
+                }
+                if(data['code'] == 2){
+                    alert('修改失败');    
+                }
+            }
+        });
+    });
+</script>
+
+<include file="Public:footer"/>

@@ -1,0 +1,25 @@
+<include file="Public:header"/>
+<!--主页面-->
+<div id="main-content" class="content">
+    <if condition="!empty($group)">
+        <div class="notification information png_bg">
+            <div>
+                您属于【{$group}】组，可能部分功能没有使用权限！
+            </div>
+        </div>
+    </if>
+    <h3 class="page-title">
+        <span class="icon glyphicon glyphicon-home"></span>欢迎进入后台
+    </h3>
+
+    
+
+    <div class="content-box-column">
+
+    </div>
+
+    <div class="clear"></div>
+    
+</div>
+
+<include file="Public:footer"/>

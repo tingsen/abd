@@ -1,0 +1,126 @@
+<html lang="en">
+    <head>
+        <title>河南奥必达装饰设计有限公司</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="description" content="河南奥必达装饰设计有限公司">
+        <meta name="keywords" content="CCD，酒店设计，酒店的设计，专业酒店设计，全球酒店设计排名，中国酒店设计排名，商业设计，豪宅设计，室内设计，豪宅，住宅，写字楼，办公室，酒店，设计">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=0.5, minimum-scale=0.5, maximum-scale=0.5, user-scalable=no">
+        <script src="__WEBHOME__/wap/js/hotcss.js"></script>
+        <link rel="stylesheet" href="__WEBHOME__/wap/css/wap.css">
+        <link rel="stylesheet" href="__WEBHOME__/wap/css/animate.css">
+        <script src="__WEBHOME__/wap/js/jquery.min.js"></script>
+        <script src="__WEBHOME__/wap/js/wow.js"></script>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e8a03d99c7fed4f4a5c36d738ebe0c94";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+        <style>
+   body{
+        background: #e8f0f2;
+   }
+   .bar{
+        background: transparent;
+   }
+
+</style>
+    </head>
+    <body>
+        <div class="bar">
+    <img src="__WEBHOME__/wap/picture/menu.png" class="menu">
+    <div class="language">
+        <span class="active" lagua="cn">中</span>
+        <span lagua="en">CN</span>
+    </div>
+</div>
+<div class="mask animated">
+    <div class="popup">
+        <img src="__WEBHOME__/wap/picture/closed.png" class="closed">
+        <div class="poto">
+            <a class="active" href="/" >首页</a>
+            <a class="" href="{:U('Index/about')}" >关于我们</a>
+            <a class="" href="{:U('Index/works')}" >案例中心</a>
+            <a class="" href="{:U('Index/contact')}" >联系我们</a>
+        </div>
+        <p class="language">
+            <span class="active" lagua="cn">中国</span>
+            <span lagua="en">CN</span>
+        </p>
+        <img src="__WEBHOME__/wap/picture/ewm.png" class="ewm">
+        <div class="share">
+            <a class="face" href="javascript:;"></a>
+            <a class="ins" href="javascript:;"></a>
+            <a class="wechat"></a>
+            <a class="weibo" href="javascript:;"></a>
+        </div>
+    </div>
+</div>
+<script>
+    function setCookie(name,value){
+        var Days = 30;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days*24*60*60*1000);
+        document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+    }
+    $('.menu').click(function () {
+        $('.mask').removeClass('slideOutUp').addClass('slideInDown').show()
+        $('.mask').on('touchmove', function (event) {
+            event.preventDefault();
+        });
+    })
+    $('.closed').click(function () {
+        $('.mask').addClass('slideOutUp').removeClass('slideInDown')
+        $('.mask').off('touchmove', function (event) {
+            event.preventDefault();
+        });
+    })
+
+    $('.language').on('click','span',function() {
+        $(this).addClass('active').removeClass()
+        setCookie('language',$(this).attr('lagua'))
+        location.reload()
+    })
+
+
+</script>
+<div class="container">
+    <img src="__WEBHOME__/wap/picture/taixian.png" class="taixian animated fadeIn">
+    <img src="__WEBHOME__/wap/picture/shadow.png" class="txshadow">
+    <!-- <div class="txshadow">
+        <img src="/img/shadow.png" >
+        <div class="fxshadow"></div>
+    </div> -->
+</div>
+<script>
+    document.body.addEventListener('touchmove', function (e) {
+        e.preventDefault()
+    }, {passive: false})
+
+    // $('.fxshadow').animate({
+    //     'bottom':-$('.fxshadow').height()
+    // },1000,function () {
+    //     $('.taixian').addClass('fadeIn').show()
+    // })
+
+</script>
+        <script>
+            var wow = new WOW(
+                {
+                  boxClass:     'wow',
+                  animateClass: 'animated',
+                  offset:       0,
+                  mobile:       true,
+                  live:true,
+                }
+              )
+              wow.init();
+        </script>
+    </body>
+    </html>

@@ -1,0 +1,117 @@
+<include file="Public:header"/>
+<!--主页面-->
+<div id="main-content" class="content">
+    <ul class="breadcrumb">
+        <li><a href="/">首页</a></li>
+        <li class="active"><a href="">管理员</a></li>
+        <li class="active">添加管理员</li>
+    </ul>
+
+    <div class="page-header clearfix">
+        <h3>管理员</h3>
+        <ul class="nav nav-tabs">    
+            <li>
+                <a href="{:U('Admin/adminList')}">管理员列表</a>
+            </li>
+            <li class="active">
+                <a href="{:U('Admin/addAdmin')}">添加管理员</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content-box-content">
+        <form action="{:U('Admin/addAdmin')}" method="post" class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="account" class="col-sm-3 control-label">账　　号：</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="account" name="account">
+                </div>
+            </div>   
+            <div class="form-group">
+                <label for="password" class="col-sm-3 control-label">密　　码：</label>
+                <div class="col-sm-9">
+                  <input type="password" class="form-control" id="password" name="password">
+                </div>
+            </div> 
+            <div class="form-group">
+                <label for="re_password" class="col-sm-3 control-label">确认密码：</label>
+                <div class="col-sm-9">
+                  <input type="password" class="form-control" id="re_password" name="re_password">
+                </div>
+            </div>
+            <!--<div class="form-group">-->
+                <!--<label class="col-sm-3 control-label">选择地区：</label>-->
+                <!--<div class="col-sm-9 city">-->
+                    <!--<div>-->
+                    <!--<select class="form-control" name="province" id="province" onchange="getArea(this)" style="width:12%; float: left; margin-right: 5px;">-->
+                        <!--<option value="-1">--省--</option>-->
+                        <!--<volist name="province" id="vo">-->
+                            <!--<option value="{$vo['region_id']}" >{$vo['region_name']}</option>-->
+                        <!--</volist>-->
+                    <!--</select>-->
+                    <!--<select class="form-control" name="city[]" id="city" style="width:12%;float: left; margin-right: 5px;">-->
+                        <!--<option value="-1">--市--</option>-->
+                    <!--</select>-->
+                    <!--<label style="padding:7px 10px;"><em class="u-img-icon" id="add_city">[+]</em></label>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="form-group">
+                <label class="col-sm-3 control-label">组　　别：</label>
+                <div class="col-sm-9">
+                    <select name="group_id" class="form-control input-sm">
+                        <option value="0">--请选择组别--</option>
+                        <volist name="group_list" id="group">
+                            <option value="{$group['group_id']}">{$group['group_name']}</option>
+                        </volist>
+                    </select>
+                </div>
+            </div>        
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                  <button type="submit" class="btn btn-default btn-primary">确认添加</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    //获取城市
+    function getArea(obj){
+        var _this = $(obj);
+        $.ajax({
+            url:"{:U('City/getCity')}",
+            type:'post',
+            data:{region_id:_this.val()},
+            success:function(data){
+                var html = '';
+                html +='<option value="-1">--市--</option>';
+                for(var i in data){
+                    html +='<option value="'+data[i].region_id+'">'+data[i].region_name+'</option>';
+                }
+                $(obj).siblings('select').html(html);
+            }
+        });
+    }
+
+    //增加一个上传图片
+    $('#add_city').click(function(){
+        var html ='';
+        html+='<div><select class="form-control" name="province" id="province" onchange="getArea(this)" style="width:12%; float: left; margin-right: 5px;">';
+        html+='<option value="-1">--省--</option>';
+        html+='<volist name="province" id="vo">';
+        html+='<option value="{$vo['region_id']}" >{$vo['region_name']}</option>';
+        html+='</volist></select>';
+        html+='<select class="form-control" name="city[]" id="city" style="width:12%;float: left; margin-right: 5px;">';
+        html+='<option value="-1">--市--</option>';
+        html+='</select>';
+        html+='<label style="padding:7px 10px;"><em class="u-img-icon" onclick="removeNode(this)">[-]</em></label></div>';
+        $('.city').append(html);
+    });
+    //删除一个上传图片的模板
+    function removeNode(obj){
+        var parent = $(obj).parent().parent();
+        parent.remove();
+    }
+</script>
+<include file="Public:footer"/>

@@ -1,0 +1,5 @@
+Application/Runtime
+Application/Common
+.env
+/.idea
+/.vscode

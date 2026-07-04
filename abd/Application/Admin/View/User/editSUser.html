@@ -1,0 +1,106 @@
+<include file="Public:header"/>
+<!--主页面-->
+<div id="main-content" class="content">
+    <ul class="breadcrumb">
+        <li><a href="/">首页</a></li>
+        <li><a href="">申请管理</a></li>
+        <li class="active">留言申请</li>
+    </ul>
+    <div class="page-header clearfix">
+        <h3>申请管理</h3>
+        <ul id="tabs" class="nav nav-tabs">    
+            <li class="active">
+                <a href="javascript:;">留言申请</a>
+            </li>
+            
+        </ul>
+    </div>
+
+    <div id="tabs-content" class="content-box-content">
+        <div  class="form-horizontal">
+            <div class="form-group">
+                <label for="v8" class="col-sm-3 control-label"><em class="prompt-red">*</em>联系方式：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="v8" name="v8" value="{$user['v8']}" >
+                </div>
+            </div>
+			<div class="form-group">
+                <label for="v10" class="col-sm-3 control-label"><em class="prompt-red">*</em>点赞数量：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="v10" name="v10"  value="{$user['v10']}">
+                </div>
+            </div>
+			<div class="form-group">
+				<label for="v12" class="col-sm-3 control-label"><em class="prompt-red">*</em>审核状态：</label>
+				<div class="col-sm-9">
+					<select id="v12" name="v12">
+					  <if condition="$user['v12'] eq 1">
+						  <option value ="1" selected>审核中</option>
+						  <option value ="2">审核通过</option>
+						  <option value ="3">审核拒绝</option>
+					  </if>
+					  <if condition="$user['v12'] eq 2">
+						  <option value ="2" selected>审核通过</option>
+					  </if>
+					  <if condition="$user['v12'] eq 3">
+						  <option value ="3" selected>审核拒绝</option>
+					  </if>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="v13" class="col-sm-3 control-label"><em class="prompt-red">*</em>审核备注：</label>
+				<div class="col-sm-9">
+					<textarea rows="5" style="width:40%;" id="v13" name="v13" placeholder="审核备注信息"> </textarea>
+				</div>
+			</div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                  <button id="sure" class="btn btn-default btn-primary">确认修改</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#sure').click(function(){
+        var id = "<?php echo $user['id']?>";
+        var v8 = $.trim($('#v8').val());
+        var v10 = $.trim($('#v10').val());
+        var v12 = $.trim($('#v12').val());
+        var v13 = $.trim($('#v13').val());
+        if(v8 == ''){
+            alert('请输入联系方式');
+            return false;
+        }
+        if(v10 == ''){
+            alert('请输入点赞数量');
+            return false;
+        }
+        if(!isInteger(v10)){
+			alert('点赞数量请输入整数');
+            return false;
+		}
+        $.ajax({
+            url:"{:U('User/editSUser')}",
+            type:'POST',
+            dataType: "json",//如果含有这句话，ajax返回的必须是json自动转码
+            data:{id:id,v8:v8,v10:v10,v12:v12,v13:v13},
+            success:function(data){
+                if(data['code'] == 1){
+                    alert('修改成功');
+                    window.location.href = "{:U('User/sList')}";
+                }
+                if(data['code'] == 2){
+                    alert('您未做任何修改');
+                }
+            }
+        });
+    });
+	function isInteger(obj) {
+		return obj % 1 === 0
+	}
+</script>
+
+<include file="Public:footer"/>

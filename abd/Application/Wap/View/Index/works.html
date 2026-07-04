@@ -1,0 +1,296 @@
+<html lang="en">
+<head>
+    <title>河南奥必达装饰设计有限公司</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="description" content="河南奥必达装饰设计有限公司">
+    <meta name="keywords" content="CCD，酒店设计，酒店的设计，专业酒店设计，全球酒店设计排名，中国酒店设计排名，商业设计，豪宅设计，室内设计，豪宅，住宅，写字楼，办公室，酒店，设计">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, minimum-scale=0.5, maximum-scale=0.5, user-scalable=no">
+    <script src="__WEBHOME__/wap/js/hotcss.js"></script>
+    <link rel="stylesheet" href="__WEBHOME__/wap/css/wap.css">
+    <link rel="stylesheet" href="__WEBHOME__/wap/css/animate.css">
+    <script src="__WEBHOME__/wap/js/jquery.min.js"></script>
+    <script src="__WEBHOME__/wap/js/wow.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e8a03d99c7fed4f4a5c36d738ebe0c94";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <link rel="stylesheet" href="__WEBHOME__/wap/css/mescroll.min.css">
+    <script src="__WEBHOME__/wap/js/mescroll.min.js" ></script>
+    <style>
+        .content{
+            height: 100%;
+            padding-bottom: 0;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<div class="bar">
+    <img src="__WEBHOME__/wap/picture/menu.png" class="menu">
+    <div class="language">
+        <span class="active" lagua="cn">中</span>
+        <span lagua="en">EN</span>
+    </div>
+</div>
+<div class="mask animated">
+    <div class="popup">
+        <img src="__WEBHOME__/wap/picture/closed.png" class="closed">
+        <div class="poto">
+            <a class="" href="/" >首页</a>
+            <a class="" href="{:U('Index/about')}" >关于我们</a>
+            <a class="active" href="{:U('Index/works')}" >案例中心</a>
+            <a class="" href="{:U('Index/contact')}" >联系我们</a>
+        </div>
+        <p class="language">
+            <span class="active" lagua="cn">中国</span>
+            <span lagua="en">CN</span>
+        </p>
+        <img src="__WEBHOME__/wap/picture/ewm.png" class="ewm">
+        <div class="share">
+            <a class="face" href="javascript:;"></a>
+            <a class="ins" href="javascript:;"></a>
+            <a class="wechat"></a>
+            <a class="weibo" href="javascript:;"></a>
+        </div>
+    </div>
+</div>
+<script>
+    function setCookie(name,value){
+        var Days = 30;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days*24*60*60*1000);
+        document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+    }
+    $('.menu').click(function () {
+        $('.mask').removeClass('slideOutUp').addClass('slideInDown').show()
+        $('.mask').on('touchmove', function (event) {
+            event.preventDefault();
+        });
+    })
+    $('.closed').click(function () {
+        $('.mask').addClass('slideOutUp').removeClass('slideInDown')
+        $('.mask').off('touchmove', function (event) {
+            event.preventDefault();
+        });
+    })
+
+    $('.language').on('click','span',function() {
+        $(this).addClass('active').removeClass()
+        setCookie('language',$(this).attr('lagua'))
+        location.reload()
+    })
+
+
+</script>
+<div class="content">
+    <div class="works">
+        <div class="type_btn">
+        </div>
+        <div id="mescroll" class="mescroll">
+            <ul class="work_list" id="workTodo"></ul>
+        </div>
+        <div class="work_popup">
+            <div class="popup_img"></div>
+            <div class="popup_close"></div>
+        </div>
+    </div>
+</div>
+<script>
+    var curTypeId = 1; // 当前页面的菜单id
+    var menuIndex = 0; // 菜单下表
+    var isfirst = true;
+    var popupCount = 0;
+    var arrList = [] // 子类别的列表
+
+    getWorkCase(curTypeId, menuIndex)
+    // work case
+    function getWorkCase(caseid,menuIndex) {
+        // $('.work_popup').eq(menuIndex).show()
+        $('#workTodo').eq(menuIndex).on('touchmove', function (event) {
+            event.preventDefault();
+        });
+        $(".type_btn").html('')
+        $(".work_list").html('')
+        const _this = this
+        $.ajax({
+            type:'GET',
+            url:'/index.php/Work/info',
+            data: { id: caseid },
+            response: JSON,
+            success:function(res){
+                const returnRes =eval(JSON.parse(res))
+                if(returnRes.code == 200) {
+                    const { data } =  returnRes
+                    arrList = data.list;
+                    data.arr.forEach((menuItem,index) => {
+                        $(".type_btn").append(`<span class="${ index == menuIndex ? 'type_active':''}" curid="${menuItem.menu.id}">${menuItem.menu.title}</span>`)
+                    })
+                    if(data.list && data.list.length) {
+                        data.list.forEach((listItem,index) => {
+                            $("#workTodo").append(`<li case="${listItem.id}">
+                                <img class="wow fadeIn mescroll-lazy-in" src="/Uploads/${listItem.img_arr ? (listItem.img_arr.split(','))[0].replace(/^\s*/,""): ''  }" >
+                                <p class="wow fadeInLeft" style="visibility: visible;">${listItem.title}</p>
+                            </li>`)
+                        })
+                    }
+
+                }
+            }
+
+        })
+    }
+    // work case
+    function getWorkCaseUrl (data) {
+        $("#worksImg").html('')
+        const urlList = data.img_arr.split(',')
+        urlList.forEach(urlItem => {
+            urlItem = urlItem.replace(/^\s*/,"");
+            $("#worksImg").append(`<img src="/Uploads/${urlItem}" class="works-img" title="${data.title}" alt="${data.title}">`)
+        })
+        $('.scroll-active').css('top','0%')
+    }
+    // 数据加载
+    function fullLoadData(isremove) {
+        if(isremove){
+            $(document.body).toggleClass("html-body-overflow");
+            $('.loadbox').remove()
+            return
+        }
+        $(document.body).toggleClass("html-body-overflow");
+        $('body').append('<div class="loadbox"><div class="dataload"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAYAAADFeBvrAAAEfUlEQVRoQ+2ajVFUMRDHdysQKlAqECsQKlAqECoQKhAqUCtQKxAqECoQKlA6gArW+TGbm1wueS/Ju3eiQ2aYAe69JP/9+O/Xqcy8zGxLRD6KyK6I/BaRI1W9m+tYnWvjsK+ZfRKR99E5l6q6P9e5mwD0S0RexABUdbZzuzY2My74BhNS1YshaZuZpZ8/KkBmhi/8EBF8g3WmqqclUP8CIC7/IQGwo6o4/MrqARSIRFWPWn2t2eTM7NhZKz6r6OidgBDanqrubQIQpoY2niWH7avqZXqBVkDunz9F5FVJ60MgmzXEZmaWMzsIYmcNgL6KyJ2qYgnNqwuQg0JLz5MTT1SVuLNYLRoyM0zsHJrvDb5TAL0Vke8JIDIACGKRCZgZvy+ZZ4m2zQxT+5YKpUVN3YBcS/jM6+TAz7G5mBkSJ2aFdauqS4HW9zoUkdPcZ5MAOWW+802QVjHvcgcmE4gX9r8d/uFxC1CY572IvC2QB/uQ560Qy1RAqJ3gyQIMUvtc2jSTq5U0sDUinF1VvW65PMJP91wyOXdKsoB0cRAOn6NlaBwNYHq3roGmi7WAcPOEPMjgt1MTTQGVYkw4k4sDLJsVtF6s9Xk3cYBASDcicpwKeYUU3Oah3tTZ4/Mxw7PWC/U+735NCUL8ww8BQrxaWUWWM7MH1snEmoW2VPWg95K175kZBMU9YEaE+GnIFwdp2yVDxE6T0Yf7zFkGuK8g1C8iciUihzWmXhWH3HYxwzieXPUkj7WacUD4NFlDNclUAYpiCuyCxqBz7Hi23kAL8PjZJkC9h2zyvSdAm5R2z1kPGnI2w+FXksZk04sWB+250NR3AqCVVtPAxiSQ2aA29TKl913gL8f2V9UrHcjfSu/PTtfpwR7kiUdjaz9oKFd9ll7+WxoifxtyiWtVPY99iKgcem0lMHR3JtUrYyKe+vkTbU+V4NzvP2nIzKiT7h9rPKrWkNM7ZURozx7AKnOakBebBHyaNVVV8iggLx0AAgvGi0PS/60Vn5mFNhlZPeULLbLBDH+swAMI5UKOzjelIbKSkCWgJXoaRcvIAjIzghjNiFwgq64e16UuzxTQUOjAojmArRR+uSZJOhMN96JFRVE3q9+M5HNpO4D+wkn8Tg5Q2t6ly8KLQ1M6TBKzoMlY5by92nOfxgxDV2ppjJMDFI9KvtWU2mZG0x4zXWnW11w8Sj6r80RnXbqtS9OOkg/RCqZHPSpt97d4CpEdfA0Bixr6CKRr0BX2H6XtMQmbWVxL3ahq6IsvXo3GmF9zc9OkhJkUDiYBykzySmPJhV8OzIbwizD1aNbyZA15FYl2QowqSjYKkMXmpDs7NAw1d3/bpFtDZhZLFCbEQUuj/VENIeFE49UEMUjbYz7jB+MnzJHCGvvyRS0gtI2WGI4hHAiiqZnZpaFkzEjARTtDk74qQC6s0M/mz0FB5YTfCygeBI+aRo0PxZeLnqdtRnyrXr2AkCI/NCZGv0/QAQjTY9/B0cnaNFQtLn+wFVDr/pNJofXA/xFQMNHzKV+qqBHkH5oPEpCmO9a4AAAAAElFTkSuQmCC" ></div></div>')
+    }
+    //work type
+    $('.type_btn').on('click','span',function () {
+        console.log("菜单切换")
+        curTypeId = $(this).attr('curId');
+        menuIndex = $(this).index()
+        $(this).addClass('type_active').siblings().removeClass('type_active');
+        getWorkCase(curTypeId, menuIndex)
+    })
+
+    /*上下拉刷新*/
+    function reFreshPull(upFunc) {
+        dataArr = {
+            data:[]
+        }
+        //创建MeScroll对象
+        mescroll = new MeScroll("mescroll", {
+            down:{
+                use:false
+            },
+            up: {
+                auto:true,//初始化完毕,是否自动触发上拉加载的回调
+                isBoth: false, //上拉加载时,如果滑动到列表顶部是否可以同时触发下拉刷新;默认false,两者不可同时触发; 这里为了演示改为true,不必等列表加载完毕才可下拉;
+                callback: upCallback, //上拉加载的回调
+                isBounce: false, //此处禁止ios回弹
+                page:{
+                    num : 0 ,
+                    size : 5
+                },
+                offset:50,
+                htmlNodata:'<p class="upwarp-nodata" style="font-size: 0.469rem;-webkit-text-fill-color: #000;">没有更多数据</p>',
+                loadFull:{
+                    use : true ,
+                    delay : 200
+                },
+                htmlLoading:'',
+                lazyLoad: {
+                    use: true // 是否开启懒加载,默认false
+                }
+
+            }
+        });
+        /*下拉刷新的回调 */
+        function upCallback(page){
+            if(mescroll.optUp.page.num == 1){
+                mescroll.hideUpScroll();
+            }else{
+                mescroll.showUpScroll();
+            }
+            upFunc(mescroll)
+        }
+    }
+
+    //scroll
+
+    function popupScroll(id) {
+        var scroll = 'mescroll'+id
+        scroll = new MeScroll("mescroll"+id, {
+            down:{
+                use:false,
+            },
+            up: {
+                lazyLoad: {
+                    use: true // 是否开启懒加载,默认false
+                }
+
+            }
+        });
+        scroll.lazyLoad()
+    }
+
+    $('#workTodo').on('click','li',function () {
+        $(".popup_img").html('')
+        const nowIndex = $(this).index()
+        if(arrList[nowIndex].img_arr) {
+            const urlList = arrList[nowIndex].img_arr.split(',')
+            console.log('122', urlList)
+            urlList.forEach((urlItem,urlIndex) => {
+                urlItem = urlItem.replace(/\s*/g,"");
+                $(".popup_img").append(`
+                    ${ urlIndex == urlList.length - 1 ? `
+                            <img src="/Uploads/${urlItem}" class="mescroll-lazy-in">
+                            <div class="mescroll-upwarp"></div>
+                        `: `
+                            <img src="/Uploads/${urlItem}" class="mescroll-lazy-in">
+                        ` }
+                `)
+            })
+        } else {
+            alert('暂未上传相关图片')
+            return false
+        }
+        $('.work_popup').show()
+        $('.scroll-active').css('top','0%')
+    })
+
+    $('.works').on('click','.popup_close',function (e) {
+        e.stopPropagation()
+        $('.work_popup').hide()
+        $('#workTodo').off('touchmove');
+    })
+
+    var wow = new WOW(
+        {
+            boxClass:     'wow',
+            animateClass: 'animated',
+            offset:       0,
+            mobile:       true,
+            live:true,
+            scrollContainer: '.mescroll'
+        }
+    )
+    wow.init();
+</script>
+<script>
+    var wow = new WOW(
+        {
+            boxClass:     'wow',
+            animateClass: 'animated',
+            offset:       0,
+            mobile:       true,
+            live:true,
+        }
+    )
+    wow.init();
+</script>
+</body>
+</html>

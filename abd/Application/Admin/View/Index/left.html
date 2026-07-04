@@ -1,0 +1,62 @@
+<include file="Public:header"/>
+<div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="nav nav-list" id="left-menu">
+            <li>
+                <a href="{:U('Index/main')}" target="main"  class="nav-top-item no-submenu active">
+                    <span class="icon glyphicon glyphicon-home"></span>
+                    <span class="hidden-minibar">首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" class="nav-top-item">
+                    <span class="icon glyphicon glyphicon-user"></span>
+                    <span class="hidden-minibar">案例管理</span>
+                    <span class="arrow glyphicon glyphicon-chevron-down"></span>
+                </a>
+                <ul>
+                    <!--                    <li>-->
+                    <!--                        <a href="{:U('User/sList')}" target="main">社区申请</a>-->
+                    <!--                    </li>-->
+                    <li>
+                        <a href="{:U('User/zList')}" target="main">案例列表</a>
+                    </li>
+                    <li>
+                        <a href="{:U('User/addUser')}" target="main">添加案例</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;" class="nav-top-item">
+                    <span class="icon glyphicon glyphicon-user"></span>
+                    <span class="hidden-minibar">资讯管理</span>
+                    <span class="arrow glyphicon glyphicon-chevron-down"></span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="{:U('Order/orderList')}" target="main">资讯列表</a>
+                    </li>
+					<li>
+						<a href="{:U('Order/addOrder')}" target="main">添加资讯</a>
+					</li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;" class="nav-top-item">
+                    <span class="icon glyphicon glyphicon-user"></span>
+                    <span class="hidden-minibar">账户信息</span>
+                    <span class="arrow glyphicon glyphicon-chevron-down"></span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="{:U('Admin/editPass')}" target="main">修改密码</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript" src="__WEBPUBLIC__/Admin/js/left-menu.js"></script>
+<include file="Public:footer"/>

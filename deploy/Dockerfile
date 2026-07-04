@@ -28,13 +28,19 @@ ENV MYSQL_HOST=sh-cynosdbmysql-grp-24pqwrao.sql.tencentcdb.com
 ENV MYSQL_PORT=25464
 
 # 强制重新拉取代码，避免 Docker 缓存
-RUN echo "cache-bust-20260704-1700" > /tmp/cache-bust
+RUN echo "cache-bust-20260704-1705" > /tmp/cache-bust
 
 # 从 GitHub 拉取项目代码
 RUN rm -rf /var/www/html/* \
     && git clone --depth 1 https://github.com/tingsen/abd.git /tmp/repo \
     && cp -r /tmp/repo/abd/* /var/www/html/ \
     && rm -rf /tmp/repo
+
+# 注入线上数据库配置（覆盖 getenv，兼容 mod_php 环境变量继承问题）
+RUN sed -i "s/getenv('MYSQL_HOST') ?: '172\.17\.0\.15'/'sh-cynosdbmysql-grp-24pqwrao.sql.tencentcdb.com'/" /var/www/html/Application/Common/Conf/config.php \
+    && sed -i "s/getenv('MYSQL_PORT') ?: '3306'/'25464'/" /var/www/html/Application/Common/Conf/config.php \
+    && sed -i "s/getenv('APP_ENV') ?: 'debug'/'deploy'/" /var/www/html/Application/Common/Conf/config.php \
+    && sed -i "s/getenv('APP_ENV') !== 'deploy'/false/" /var/www/html/index.php
 
 # 配置 Apache 支持 ThinkPHP URL 重写
 RUN echo '<Directory /var/www/html/>\n\

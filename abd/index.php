@@ -31,8 +31,8 @@ if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
 
 
 // 开启调试模式 建议开发阶段开启 部署阶段注释或者设为false
-
-define('APP_DEBUG',True);
+// 线上环境(APP_ENV=deploy)自动关闭调试模式，本地默认开启
+define('APP_DEBUG', getenv('APP_ENV') !== 'deploy');
 
 
 

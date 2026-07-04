@@ -26,11 +26,11 @@ return  array(
 
     /* 数据库设置 */
     'DB_TYPE'               => 'mysql', // 数据库类型
-    'DB_HOST'               => '172.17.0.15', // 服务器地址
+    'DB_HOST'               => 'sh-cynosdbmysql-grp-24pqwrao.sql.tencentcdb.com', // 服务器地址
     'DB_NAME'               => 'tingsen-d8gqrf96e9a41d41c', // 数据库名
     'DB_USER'               => 'adb_root', // 用户名
     'DB_PWD'                => '2026adb_root', // 密码
-    'DB_PORT'               => '3306', // 端口
+    'DB_PORT'               => '25464', // 端口
     'DB_PREFIX'             => 'jz_', // 数据库表前缀
     'DB_FIELDTYPE_CHECK'    => false, // 是否进行字段类型检查
     'DB_FIELDS_CACHE'       => true, // 启用字段缓存
